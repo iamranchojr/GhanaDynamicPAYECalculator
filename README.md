@@ -1,2 +1,2 @@
 # GhanaDynamicPAYECalculator
-A dynamic PAYE Calculator for Ghana employees that allows you to provide dynamic tax rates to use for the calculation
+A dynamic PAYE Calculator that allows you to provide dynamic tax rates to calculate for Ghanaian's Employee PAYE 
