@@ -15,7 +15,7 @@ namespace PAYECalc
                 new TaxRate
                 {
                     Rate = 0,
-                    ChargeableIncome = 288
+                    ChargeableIncome = 288  
                 },
 
                 new TaxRate

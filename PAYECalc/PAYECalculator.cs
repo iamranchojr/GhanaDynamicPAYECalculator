@@ -42,6 +42,7 @@ namespace PAYECalc
         //Constants 
         public const string NULL_TAX_RATES_EXCEPTION_MESSAGE = "Tax rates cannot be null";
         public const string EMPTY_TAX_RATES_EXCEPTION_MESSAGE = "Tax rates cannot be empty. It should contain at least one item";
+
         // Constructors
 
         /// <summary>

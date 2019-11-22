@@ -48,11 +48,14 @@ namespace PAYECalc
         /// <param name="chargeableIncome">Tax rate chargeable income</param>
         public TaxRate(double rate, decimal chargeableIncome)
         {
-            //reject if rate is < 0 
-            if (rate < 0) throw new ArgumentException(INVALID_TAXRATE_EXCEPTON_MESSAGE);
+            // This is not needed, an exception will be thrown from our properties
+            // when invalid values are provided
 
-            //reject if chargeAbleIncome is <= 0 
-            if (chargeableIncome <= 0) throw new ArgumentException(INVALID_CHARGEABLEINCOME_EXCEPTON_MESSAGE);
+            // reject if rate is < 0 
+            // if (rate < 0) throw new ArgumentException(INVALID_TAXRATE_EXCEPTON_MESSAGE);
+
+            // reject if chargeAbleIncome is <= 0 
+            // if (chargeableIncome <= 0) throw new ArgumentException(INVALID_CHARGEABLEINCOME_EXCEPTON_MESSAGE);
 
             Rate = rate;
             ChargeableIncome = chargeableIncome;
