@@ -32,9 +32,14 @@ namespace PAYECalc
     /// </summary>
     public class TaxRate
     {
-        private double _rate;
+        //Constants
+        public const string INVALID_CHARGEABLEINCOME_EXCEPTON_MESSAGE = "Invalid Chargeable Income";
+        public const string INVALID_TAXRATE_EXCEPTON_MESSAGE = "Invalid value provided. Rate should be between 0 and 100";
 
-        public TaxRate() {}
+        private double _rate;
+        private decimal _chargeableIncome;
+
+        public TaxRate() { }
 
         /// <summary>
         /// Constructor to directly create a Tax rate by passing in the rate and chargeable income
@@ -43,6 +48,12 @@ namespace PAYECalc
         /// <param name="chargeableIncome">Tax rate chargeable income</param>
         public TaxRate(double rate, decimal chargeableIncome)
         {
+            //reject if rate is < 0 
+            if (rate < 0) throw new ArgumentException(INVALID_TAXRATE_EXCEPTON_MESSAGE);
+
+            //reject if chargeAbleIncome is <= 0 
+            if (chargeableIncome <= 0) throw new ArgumentException(INVALID_CHARGEABLEINCOME_EXCEPTON_MESSAGE);
+
             Rate = rate;
             ChargeableIncome = chargeableIncome;
         }
@@ -61,7 +72,7 @@ namespace PAYECalc
                 // check to make sure value is within the 100 percentage limit
                 if (value > 100 || value < 0)
                 {
-                    throw new Exception("Invalid value provided. Rate should be between 0 and 100");
+                    throw new ArgumentException(INVALID_TAXRATE_EXCEPTON_MESSAGE);
                 }
 
                 _rate = value;
@@ -71,7 +82,20 @@ namespace PAYECalc
         /// <summary>
         /// Chargeable Income
         /// </summary>
-        public decimal ChargeableIncome { get; set; }
+        public decimal ChargeableIncome
+        {
+            get => _chargeableIncome;
+            set
+            {
+                // check to make sure value is within the 100 percentage limit
+                if (value < 0)
+                {
+                    throw new ArgumentException(INVALID_CHARGEABLEINCOME_EXCEPTON_MESSAGE);
+                }
+
+                _chargeableIncome = value;
+            }
+        }
 
         /// <summary>
         /// Calculates tax rate for amount provided using the ChargeableIncome
