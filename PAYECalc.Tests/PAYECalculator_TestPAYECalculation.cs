@@ -1,5 +1,7 @@
 ﻿
 using Xunit;
+using System;
+using System.Collections.Generic;
 
 namespace PAYECalc.Tests
 {
@@ -64,6 +66,58 @@ namespace PAYECalc.Tests
             var PAYE = _calculator.CalculatePAYE(7560M);
 
             Assert.False(PAYE == 3205.78M, "PAYE should not be 3205.78");
+        }
+
+        [Fact]
+        public void IsExceptionThrownOnCreation_InputTaxRatesIsNull_ExceptionThrown()
+        {
+            List<TaxRate> testTaxRates = null;
+            var potentialException = Record.Exception(() => new PAYECalculator(testTaxRates));
+            Assert.Equal(PAYECalculator.NULL_TAX_RATES_EXCEPTION_MESSAGE, potentialException.Message);
+        }
+
+        [Fact]
+        public void IsExceptionThrownOnCreation_InputTaxRatesIsEmpty_ExceptionThrown()
+        {
+            List<TaxRate> testTaxRates = new List<TaxRate>();
+            var potentialException = Record.Exception(() => new PAYECalculator(testTaxRates));
+            Assert.Equal(PAYECalculator.EMPTY_TAX_RATES_EXCEPTION_MESSAGE, potentialException.Message);
+        }
+
+        [Fact]
+        public void IsNoExceptionOnCreation_InputTaxRatesIsNonEmpty_NoExceptionThrown()
+        {
+            List<TaxRate> testTaxRates = new List<TaxRate> { new TaxRate(0, 288) };
+            var potentialException = Record.Exception(() => new PAYECalculator(testTaxRates));
+            Assert.Null(potentialException);
+        }
+
+        [Fact]
+        public void IsNoException_OnTaxRate_Creation_InputValuesCorrect_NoExceptionThrown()
+        { 
+            var potentialException = Record.Exception(() => new TaxRate(0, 288));
+            Assert.Null(potentialException);
+        }
+        
+        [Fact]
+        public void IsException_OnTaxRate_Creation_InputRateNegative_ExceptionThrown()
+        { 
+            var potentialException = Record.Exception(() => new TaxRate(-0.01, 288));
+            Assert.Equal(TaxRate.INVALID_TAXRATE_EXCEPTON_MESSAGE, potentialException.Message);
+        }
+        
+        [Fact]
+        public void IsException_OnTaxRate_Creation_InputChargeableIconeNegative_ExceptionThrown()
+        { 
+            var potentialException = Record.Exception(() => new TaxRate(1, -288));
+            Assert.Equal(TaxRate.INVALID_CHARGEABLEINCOME_EXCEPTON_MESSAGE, potentialException.Message);
+        }
+        
+        [Fact]
+        public void IsException_OnTaxRate_Creation_InputRateGreaterThan100_ExceptionThrown()
+        { 
+            var potentialException = Record.Exception(() => new TaxRate(100.02, 288));
+            Assert.Equal(TaxRate.INVALID_TAXRATE_EXCEPTON_MESSAGE, potentialException.Message);
         }
     }
 }

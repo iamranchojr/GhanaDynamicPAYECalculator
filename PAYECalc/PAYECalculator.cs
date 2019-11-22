@@ -39,7 +39,9 @@ namespace PAYECalc
     /// </summary>
     public class PAYECalculator
     {
-
+        //Constants 
+        public const string NULL_TAX_RATES_EXCEPTION_MESSAGE = "Tax rates cannot be null";
+        public const string EMPTY_TAX_RATES_EXCEPTION_MESSAGE = "Tax rates cannot be empty. It should contain at least one item";
         // Constructors
 
         /// <summary>
@@ -121,15 +123,16 @@ namespace PAYECalc
             if (TaxRates == null)
             {
                 // throw exception if it is
-                throw new Exception("Tax rates cannot be null");
+                throw new Exception(NULL_TAX_RATES_EXCEPTION_MESSAGE);
             }
 
             // check to make sure at least it contains one item
             if (TaxRates.Count == 0)
             {
                 // throw exception if it is
-                throw new Exception("Tax rates cannot be empty. It should contain at least one item");
+                throw new Exception(EMPTY_TAX_RATES_EXCEPTION_MESSAGE );
             }
+ 
         }
 
         /// <summary>
